@@ -1,0 +1,1181 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VoxConnect | Language Without Barriers</title>
+
+  <style>
+    :root {
+      --purple: #6c4ce4;
+      --purple-dark: #5133bd;
+      --purple-light: #f1edff;
+      --text: #24233a;
+      --muted: #77788e;
+      --border: #e6e4ef;
+      --white: #ffffff;
+      --background: #f8f7fc;
+      --danger: #b42332;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+
+    button, textarea, select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 10px;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    button:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible {
+      outline: 3px solid #b9a8ff;
+      outline-offset: 2px;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.65;
+    }
+
+    .topbar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 24px;
+    }
+
+    .topbar-inner {
+      max-width: 1080px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: var(--purple);
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .brand-name {
+      font-size: 22px;
+      font-weight: 750;
+      letter-spacing: -0.7px;
+    }
+
+    .brand-tagline {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 42px 20px 60px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      background: var(--purple-light);
+      color: var(--purple-dark);
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    h1 {
+      font-size: clamp(30px, 5vw, 44px);
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+      margin: 17px 0 12px;
+    }
+
+    .hero p {
+      max-width: 540px;
+      margin: 0 auto;
+      color: var(--muted);
+    }
+
+    .translator {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 10px 35px rgba(45, 35, 90, 0.06);
+    }
+
+    .language-row {
+      display: grid;
+      grid-template-columns: 1fr 48px 1fr;
+      gap: 14px;
+      align-items: end;
+      margin-bottom: 20px;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    select {
+      width: 100%;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      color: var(--text);
+    }
+
+    .swap-button {
+      width: 44px;
+      height: 44px;
+      background: var(--purple-light);
+      color: var(--purple-dark);
+      font-size: 22px;
+    }
+
+    .swap-button:hover {
+      background: #e5dcff;
+    }
+
+    .text-panels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .text-panel {
+      min-width: 0;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      overflow: hidden;
+    }
+
+    .panel-heading {
+      background: #fbfaff;
+      padding: 12px 15px;
+      font-size: 13px;
+      font-weight: bold;
+      border-bottom: 1px solid var(--border);
+    }
+
+    textarea {
+      display: block;
+      width: 100%;
+      min-height: 200px;
+      resize: vertical;
+      border: none;
+      outline: none;
+      padding: 16px;
+      color: var(--text);
+      background: white;
+      line-height: 1.8;
+    }
+
+    textarea:focus-visible {
+      outline: 2px solid var(--purple);
+      outline-offset: -2px;
+    }
+
+    .result-area {
+      min-height: 200px;
+      padding: 16px;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .result-placeholder {
+      color: #9998aa;
+    }
+
+    .panel-footer {
+      min-height: 42px;
+      padding: 7px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .small-button {
+      padding: 7px 10px;
+      background: white;
+      color: var(--purple-dark);
+      border: 1px solid var(--border);
+      font-size: 12px;
+    }
+
+    .small-button:hover {
+      background: var(--purple-light);
+    }
+
+    .primary-button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px 18px;
+      background: var(--purple);
+      color: white;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    .primary-button:hover {
+      background: var(--purple-dark);
+    }
+
+    .status-message {
+      margin-top: 12px;
+      min-height: 20px;
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .status-message.error {
+      color: var(--danger);
+    }
+
+    .saved-section {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      padding: 22px;
+      margin-top: 24px;
+    }
+
+    .saved-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .saved-heading h2 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: -0.4px;
+    }
+
+    .saved-heading p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .count {
+      white-space: nowrap;
+      background: var(--purple-light);
+      color: var(--purple-dark);
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .saved-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .saved-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 15px;
+      min-width: 0;
+    }
+
+    .saved-language {
+      color: var(--purple-dark);
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 9px;
+    }
+
+    .saved-original {
+      font-weight: 600;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }
+
+    .saved-text {
+      color: #55556b;
+      margin-top: 7px;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }
+
+    .history-date {
+      color: #8991a6;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    .saved-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 13px;
+    }
+
+    .saved-actions button {
+      background: var(--purple-light);
+      color: var(--purple-dark);
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .saved-actions button:hover {
+      background: #e5dcff;
+    }
+
+    .saved-actions .delete-saved {
+      background: #fff0f0;
+      color: var(--danger);
+    }
+
+    .saved-actions .delete-saved:hover {
+      background: #ffe2e2;
+    }
+
+    .empty-state {
+      color: var(--muted);
+      background: #fbfaff;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      font-size: 13px;
+      margin: 0;
+    }
+
+    #clearHistoryButton {
+      margin-top: 18px;
+      background: #fff0f0;
+      color: var(--danger);
+      font-size: 13px;
+      padding: 10px 14px;
+    }
+
+    #clearHistoryButton:hover {
+      background: #ffe2e2;
+    }
+
+    .section-save-button {
+      margin-top: 14px;
+      background: var(--purple-light);
+      color: var(--purple-dark);
+      padding: 10px 14px;
+      font-weight: bold;
+      font-size: 13px;
+    }
+
+    .section-save-button:hover {
+      background: #e5dcff;
+    }
+
+    .privacy-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 24px;
+    }
+
+    @media (max-width: 650px) {
+      main {
+        padding: 28px 13px 40px;
+      }
+
+      .translator {
+        padding: 15px;
+      }
+
+      .language-row {
+        grid-template-columns: 1fr 42px 1fr;
+        gap: 8px;
+      }
+
+      .swap-button {
+        width: 40px;
+        height: 42px;
+      }
+
+      .text-panels {
+        grid-template-columns: 1fr;
+      }
+
+      textarea,
+      .result-area {
+        min-height: 140px;
+      }
+
+      .saved-section {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo" aria-hidden="true">V</div>
+      <div>
+        <div class="brand-name">VoxConnect</div>
+        <div class="brand-tagline">Language without barriers</div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <span class="eyebrow">YOUR PERSONAL TRANSLATOR</span>
+      <h1>Make every word<br>bring us closer.</h1>
+      <p>
+        Translate messages, save useful phrases, and revisit
+        your recent translations in one place.
+      </p>
+    </section>
+
+    <section class="translator" aria-label="Translator">
+      <div class="language-row">
+        <div>
+          <label class="field-label" for="source">Translate from</label>
+          <select id="source">
+          <option value="en">English</option>
+          <option value="fa">Farsi (Persian)</option>
+          <option value="es">Spanish</option>
+          <option value="fr">French</option>
+          <option value="ar">Arabic</option>
+          <option value="de">German</option>
+          <option value="it">Italian</option>
+          <option value="hi">Hindi</option>
+        <option value="tr">Turkish</option>
+        </select>
+        </div>
+
+        <button
+          class="swap-button"
+          id="swapButton"
+          type="button"
+          aria-label="Swap languages"
+          title="Swap languages"
+        >⇄</button>
+
+        <div>
+          <label class="field-label" for="target">Translate to</label>        
+          <select id="target">
+            <option value="fa">Farsi (Persian)</option>
+            <option value="en">English</option>
+            <option value="es">Spanish</option>
+            <option value="fr">French</option>
+            <option value="ar">Arabic</option>
+            <option value="de">German</option>
+            <option value="it">Italian</option>
+            <option value="hi">Hindi</option>
+            <option value="tr">Turkish</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="text-panels">
+        <div class="text-panel">
+          <div class="panel-heading">Your text</div>
+          <textarea
+            id="inputText"
+            placeholder="Type or paste text here..."
+            maxlength="4500"
+            aria-label="Text to translate"
+          ></textarea>
+          <div class="panel-footer">
+            <span id="characterCount">0 / 4500</span>
+            <button class="small-button" id="clearInputButton" type="button">
+              Clear
+            </button>
+          </div>
+        </div>
+
+        <div class="text-panel">
+          <div class="panel-heading">Translation</div>
+          <div
+            class="result-area result-placeholder"
+            id="result"
+            role="status"
+            aria-live="polite"
+          >Your translation will appear here...</div>
+          <div class="panel-footer">
+            <span id="resultLanguage">Farsi (Persian)</span>
+            <button class="small-button" id="copyButton" type="button">
+              Copy translation
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button class="primary-button" id="translateButton" type="button">
+        Translate text
+      </button>
+
+      <div class="status-message" id="statusMessage" aria-live="polite"></div>
+
+      <button
+        class="section-save-button"
+        id="saveButton"
+        type="button"
+        disabled
+      >☆ Save phrase</button>
+    </section>
+
+    <section class="saved-section">
+      <div class="saved-heading">
+        <div>
+          <h2>Saved phrases</h2>
+          <p>Keep important translations close at hand.</p>
+        </div>
+        <span class="count" id="savedCount">0 saved</span>
+      </div>
+
+      <div class="saved-list" id="savedList">
+        <p class="empty-state">Your saved phrases will appear here.</p>
+      </div>
+    </section>
+
+    <section class="saved-section">
+      <div class="saved-heading">
+        <div>
+          <h2>Translation history</h2>
+          <p>Your 50 most recent successful translations.</p>
+        </div>
+        <span class="count" id="historyCount">0 entries</span>
+      </div>
+
+      <div class="saved-list" id="historyList">
+        <p class="empty-state">
+          Your recent translations will appear here.
+        </p>
+      </div>
+
+      <button id="clearHistoryButton" type="button">
+        Clear all history
+      </button>
+    </section>
+
+    <p class="privacy-note">
+      Your saved phrases and history are stored in this browser.
+      Translation requests are sent to MyMemory.
+    </p>
+  </main>
+
+  <script>
+    // Get the page elements.
+    const input = document.getElementById("inputText");
+    const result = document.getElementById("result");
+    const button = document.getElementById("translateButton");
+    const copyButton = document.getElementById("copyButton");
+    const source = document.getElementById("source");
+    const target = document.getElementById("target");
+    const swapButton = document.getElementById("swapButton");
+    const saveButton = document.getElementById("saveButton");
+    const savedList = document.getElementById("savedList");
+    const savedCount = document.getElementById("savedCount");
+    const historyList = document.getElementById("historyList");
+    const historyCount = document.getElementById("historyCount");
+    const statusMessage = document.getElementById("statusMessage");
+    const characterCount = document.getElementById("characterCount");
+    const resultLanguage = document.getElementById("resultLanguage");
+
+    // These variables are declared outside all event handlers.
+    // This lets every feature access them safely.
+    let lastSuccessfulTranslation = null;
+    let savedPhrases = [];
+    let translationHistory = [];
+
+    const SAVED_KEY = "voxConnectSavedPhrases";
+    const HISTORY_KEY = "voxConnectHistory";
+    const MAX_HISTORY = 50;
+
+    // Name each language for display.
+    
+function languageName(code) {
+  const names = {
+    en: "English",
+    fa: "Farsi (Persian)",
+    es: "Spanish",
+    fr: "French",
+    ar: "Arabic",
+    de: "German",
+    it: "Italian",
+    hi: "Hindi",
+    tr: "Turkish"
+  };
+
+  return names[code] || code;
+}
+
+    // Apply the correct text direction to a language.
+function applyDirection(element, languageCode) {
+  const isRightToLeft =
+    languageCode === "fa" || languageCode === "ar";
+
+  element.dir = isRightToLeft ? "rtl" : "ltr";
+  element.style.textAlign = isRightToLeft ? "right" : "left";
+}
+
+
+    // Update the result language label and input direction.
+    function updateLanguageDisplay() {
+      applyDirection(input, source.value);
+      applyDirection(result, target.value);
+      resultLanguage.textContent = languageName(target.value);
+    }
+
+    // Show a status message.
+    function showStatus(message, isError = false) {
+      statusMessage.textContent = message;
+      statusMessage.classList.toggle("error", isError);
+    }
+
+    // Load browser storage safely.
+    function loadFromStorage(key) {
+      try {
+        const stored = localStorage.getItem(key);
+
+        if (!stored) {
+          return [];
+        }
+
+        const parsed = JSON.parse(stored);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (error) {
+        console.error("Could not load browser data:", error);
+        return [];
+      }
+    }
+
+    // Save saved phrases.
+    function savePhrasesToStorage() {
+      try {
+        localStorage.setItem(SAVED_KEY, JSON.stringify(savedPhrases));
+        return true;
+      } catch (error) {
+        showStatus("Could not save phrases in this browser.", true);
+        return false;
+      }
+    }
+
+    // Save translation history.
+    function saveHistoryToStorage() {
+      try {
+        translationHistory = translationHistory.slice(0, MAX_HISTORY);
+
+        localStorage.setItem(
+          HISTORY_KEY,
+          JSON.stringify(translationHistory)
+        );
+
+        return true;
+      } catch (error) {
+        showStatus("Could not save history in this browser.", true);
+        return false;
+      }
+    }
+
+    // Build a saved phrase card.
+    function createPhraseCard(entry, index) {
+      const card = document.createElement("article");
+      card.className = "saved-card";
+
+      const languages = document.createElement("div");
+      languages.className = "saved-language";
+      languages.textContent =
+        languageName(entry.sourceLang) + " → " +
+        languageName(entry.targetLang);
+
+      const original = document.createElement("div");
+      original.className = "saved-original";
+      original.textContent = entry.sourceText;
+      applyDirection(original, entry.sourceLang);
+
+      const translation = document.createElement("div");
+      translation.className = "saved-text";
+      translation.textContent = entry.translatedText;
+      applyDirection(translation, entry.targetLang);
+
+      const actions = document.createElement("div");
+      actions.className = "saved-actions";
+
+      const useButton = document.createElement("button");
+      useButton.type = "button";
+      useButton.textContent = "Use again";
+
+      useButton.addEventListener("click", function () {
+        source.value = entry.sourceLang;
+        target.value = entry.targetLang;
+        input.value = entry.sourceText;
+
+        updateLanguageDisplay();
+        characterCount.textContent =
+          input.value.length + " / 4500";
+
+        result.textContent = entry.translatedText;
+        result.classList.remove("result-placeholder");
+
+        lastSuccessfulTranslation = {
+          sourceText: entry.sourceText,
+          translatedText: entry.translatedText,
+          sourceLang: entry.sourceLang,
+          targetLang: entry.targetLang
+        };
+
+        saveButton.disabled = false;
+        showStatus("Phrase loaded.");
+        input.focus();
+      });
+
+      const deleteButton = document.createElement("button");
+      deleteButton.type = "button";
+      deleteButton.className = "delete-saved";
+      deleteButton.textContent = "Delete";
+
+      deleteButton.addEventListener("click", function () {
+        const removed = savedPhrases.splice(index, 1)[0];
+
+        if (!savePhrasesToStorage()) {
+          savedPhrases.splice(index, 0, removed);
+        }
+
+        renderSavedPhrases();
+      });
+
+      actions.appendChild(useButton);
+      actions.appendChild(deleteButton);
+
+      card.appendChild(languages);
+      card.appendChild(original);
+      card.appendChild(translation);
+      card.appendChild(actions);
+
+      return card;
+    }
+
+    // Display all saved phrases.
+    function renderSavedPhrases() {
+      savedList.replaceChildren();
+      savedCount.textContent = savedPhrases.length + " saved";
+
+      if (savedPhrases.length === 0) {
+        const empty = document.createElement("p");
+        empty.className = "empty-state";
+        empty.textContent = "Your saved phrases will appear here.";
+        savedList.appendChild(empty);
+        return;
+      }
+
+      savedPhrases.forEach(function (entry, index) {
+        savedList.appendChild(createPhraseCard(entry, index));
+      });
+    }
+
+    // Display translation history.
+    function renderTranslationHistory() {
+      historyList.replaceChildren();
+      historyCount.textContent = translationHistory.length + " entries";
+
+      if (translationHistory.length === 0) {
+        const empty = document.createElement("p");
+        empty.className = "empty-state";
+        empty.textContent = "Your recent translations will appear here.";
+        historyList.appendChild(empty);
+        return;
+      }
+
+      translationHistory.forEach(function (entry, index) {
+        const card = document.createElement("article");
+        card.className = "saved-card";
+
+        const languages = document.createElement("div");
+        languages.className = "saved-language";
+        languages.textContent =
+          languageName(entry.sourceLang) + " → " +
+          languageName(entry.targetLang);
+
+        const original = document.createElement("div");
+        original.className = "saved-original";
+        original.textContent = entry.sourceText;
+        applyDirection(original, entry.sourceLang);
+
+        const translation = document.createElement("div");
+        translation.className = "saved-text";
+        translation.textContent = entry.translatedText;
+        applyDirection(translation, entry.targetLang);
+
+        const date = document.createElement("div");
+        date.className = "history-date";
+
+        const parsedDate = new Date(entry.timestamp);
+        date.textContent = Number.isNaN(parsedDate.getTime())
+          ? ""
+          : parsedDate.toLocaleString();
+
+        const actions = document.createElement("div");
+        actions.className = "saved-actions";
+
+        const useButton = document.createElement("button");
+        useButton.type = "button";
+        useButton.textContent = "Use again";
+
+        useButton.addEventListener("click", function () {
+          source.value = entry.sourceLang;
+          target.value = entry.targetLang;
+          input.value = entry.sourceText;
+
+          updateLanguageDisplay();
+          characterCount.textContent =
+            input.value.length + " / 4500";
+
+          result.textContent = entry.translatedText;
+          result.classList.remove("result-placeholder");
+
+          lastSuccessfulTranslation = {
+            sourceText: entry.sourceText,
+            translatedText: entry.translatedText,
+            sourceLang: entry.sourceLang,
+            targetLang: entry.targetLang
+          };
+
+          saveButton.disabled = false;
+          showStatus("Translation loaded from history.");
+          input.focus();
+        });
+
+        const deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.className = "delete-saved";
+        deleteButton.textContent = "Delete";
+
+        deleteButton.addEventListener("click", function () {
+          const removed = translationHistory.splice(index, 1)[0];
+
+          if (!saveHistoryToStorage()) {
+            translationHistory.splice(index, 0, removed);
+          }
+
+          renderTranslationHistory();
+        });
+
+        actions.appendChild(useButton);
+        actions.appendChild(deleteButton);
+
+        card.appendChild(languages);
+        card.appendChild(original);
+        card.appendChild(translation);
+        card.appendChild(date);
+        card.appendChild(actions);
+
+        historyList.appendChild(card);
+      });
+    }
+
+    // Translate the input text using MyMemory.
+    button.addEventListener("click", async function () {
+      const message = input.value.trim();
+
+      if (!message) {
+        showStatus("Please enter some text to translate.", true);
+        input.focus();
+        return;
+      }
+
+      if (source.value === target.value) {
+        showStatus("Choose two different languages.", true);
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = "Translating...";
+      showStatus("Translating your text...");
+
+      result.textContent = "Translating your text...";
+      result.classList.remove("result-placeholder");
+      lastSuccessfulTranslation = null;
+      saveButton.disabled = true;
+
+      try {
+        const languagePair = source.value + "|" + target.value;
+        const url =
+          "https://api.mymemory.translated.net/get?q=" +
+          encodeURIComponent(message) +
+          "&langpair=" + encodeURIComponent(languagePair);
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error("The translation service returned an error.");
+        }
+
+        const data = await response.json();
+
+        if (
+          !data.responseData ||
+          typeof data.responseData.translatedText !== "string" ||
+          data.responseStatus === 403
+        ) {
+          throw new Error("The translation service could not translate this text.");
+        }
+
+        const translatedText = data.responseData.translatedText;
+
+        lastSuccessfulTranslation = {
+          sourceText: message,
+          translatedText: translatedText,
+          sourceLang: source.value,
+          targetLang: target.value
+        };
+
+        result.textContent = translatedText;
+        result.classList.remove("result-placeholder");
+        applyDirection(result, target.value);
+
+        saveButton.disabled = false;
+
+        const historyEntry = {
+          sourceText: message,
+          translatedText: translatedText,
+          sourceLang: source.value,
+          targetLang: target.value,
+          timestamp: new Date().toISOString()
+        };
+
+        translationHistory.unshift(historyEntry);
+        translationHistory = translationHistory.slice(0, MAX_HISTORY);
+
+        saveHistoryToStorage();
+        renderTranslationHistory();
+
+        showStatus("Translation complete!");
+      } catch (error) {
+        console.error("Translation error:", error);
+
+        result.textContent =
+          "Sorry, the translation could not be completed.";
+        result.classList.add("result-placeholder");
+
+        showStatus(
+          "Translation failed. Check your internet connection and try again.",
+          true
+        );
+      } finally {
+        button.disabled = false;
+        button.textContent = "Translate text";
+      }
+    });
+
+    // Copy the current translation.
+    copyButton.addEventListener("click", async function () {
+      const translatedText = result.textContent;
+
+      if (
+        !lastSuccessfulTranslation ||
+        !translatedText ||
+        result.classList.contains("result-placeholder")
+      ) {
+        showStatus("Translate some text before copying.", true);
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(translatedText);
+        copyButton.textContent = "Copied!";
+
+        setTimeout(function () {
+          copyButton.textContent = "Copy translation";
+        }, 1500);
+      } catch (error) {
+        showStatus(
+          "Copy was blocked by the browser. You can select the text manually.",
+          true
+        );
+      }
+    });
+
+    // Swap languages and use the previous translation as new input.
+    swapButton.addEventListener("click", function () {
+      const oldSource = source.value;
+      source.value = target.value;
+      target.value = oldSource;
+
+      if (lastSuccessfulTranslation) {
+        input.value = lastSuccessfulTranslation.translatedText;
+      }
+
+      updateLanguageDisplay();
+      characterCount.textContent = input.value.length + " / 4500";
+
+      result.textContent = "Your translation will appear here...";
+      result.classList.add("result-placeholder");
+
+      lastSuccessfulTranslation = null;
+      saveButton.disabled = true;
+
+      showStatus("Languages swapped. Translate again for the reverse translation.");
+    });
+
+    // Update text direction when a language changes.
+    source.addEventListener("change", function () {
+      updateLanguageDisplay();
+      lastSuccessfulTranslation = null;
+      saveButton.disabled = true;
+    });
+
+    target.addEventListener("change", function () {
+      updateLanguageDisplay();
+      lastSuccessfulTranslation = null;
+      saveButton.disabled = true;
+
+      result.textContent = "Your translation will appear here...";
+      result.classList.add("result-placeholder");
+    });
+
+    // Update the character counter while typing.
+    input.addEventListener("input", function () {
+      characterCount.textContent = input.value.length + " / 4500";
+
+      if (
+        lastSuccessfulTranslation &&
+        input.value !== lastSuccessfulTranslation.sourceText
+      ) {
+        lastSuccessfulTranslation = null;
+        saveButton.disabled = true;
+      }
+    });
+
+    // Clear the input field.
+    document.getElementById("clearInputButton").addEventListener(
+      "click",
+      function () {
+        input.value = "";
+        characterCount.textContent = "0 / 4500";
+        lastSuccessfulTranslation = null;
+        saveButton.disabled = true;
+        input.focus();
+        showStatus("");
+      }
+    );
+
+    // Save the latest successful translation.
+    saveButton.addEventListener("click", function () {
+      if (!lastSuccessfulTranslation) {
+        showStatus("Translate some text before saving a phrase.", true);
+        return;
+      }
+
+      const entry = lastSuccessfulTranslation;
+
+      const alreadySaved = savedPhrases.some(function (phrase) {
+        return (
+          phrase.sourceText === entry.sourceText &&
+          phrase.translatedText === entry.translatedText &&
+          phrase.sourceLang === entry.sourceLang &&
+          phrase.targetLang === entry.targetLang
+        );
+      });
+
+      if (alreadySaved) {
+        showStatus("This phrase is already saved.");
+        return;
+      }
+
+      const newPhrase = {
+        sourceText: entry.sourceText,
+        translatedText: entry.translatedText,
+        sourceLang: entry.sourceLang,
+        targetLang: entry.targetLang,
+        savedAt: new Date().toISOString()
+      };
+
+      savedPhrases.unshift(newPhrase);
+
+      if (!savePhrasesToStorage()) {
+        savedPhrases.shift();
+        return;
+      }
+
+      renderSavedPhrases();
+      showStatus("Phrase saved!");
+    });
+
+    // Clear all translation history after confirmation.
+    document.getElementById("clearHistoryButton").addEventListener(
+      "click",
+      function () {
+        if (translationHistory.length === 0) {
+          return;
+        }
+
+        const confirmed = confirm(
+          "Are you sure you want to clear all translation history?"
+        );
+
+        if (!confirmed) {
+          return;
+        }
+
+        const previousHistory = translationHistory;
+        translationHistory = [];
+
+        if (!saveHistoryToStorage()) {
+          translationHistory = previousHistory;
+        }
+
+        renderTranslationHistory();
+        showStatus("Translation history cleared.");
+      }
+    );
+
+    // Initialize the app from browser storage.
+    savedPhrases = loadFromStorage(SAVED_KEY);
+    translationHistory = loadFromStorage(HISTORY_KEY).slice(0, MAX_HISTORY);
+
+    renderSavedPhrases();
+    renderTranslationHistory();
+    updateLanguageDisplay();
+  </script>
+</body>
+</html>
